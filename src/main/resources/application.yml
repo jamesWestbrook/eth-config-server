@@ -1,0 +1,27 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: eth-config-server
+  profiles:
+    active: vault,git
+  cloud:
+    config:
+      server:
+        vault:
+          backend: secret
+          order: 1
+          port: ${VAULT_PORT}
+          token: ${VAULT_TOKEN}
+          scheme: ${VAULT_SCHEME}
+          host: ${VAULT_HOST}
+          authentication: TOKEN
+          kv-version: 2
+        git:
+          uri: ${GIT_CONFIG_REPO}
+          order: 2
+          password: ${GIT_PASSWORD}
+          username: ${GIT_USERNAME}
+          search-paths: '{application}'
+          default-label: main
+      fail-fast: true
